@@ -56,18 +56,32 @@ ion-app {
 
 html,
 body {
-  background: #0f0f10;
+  background: #0a0a0a;
   overscroll-behavior: none;
 }
 
 body {
+  align-items: stretch;
+  display: flex;
+  justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
+  padding: 0;
   padding-top: var(--ion-safe-area-top);
   padding-bottom: var(--ion-safe-area-bottom);
 }
 
-ion-app,
+app-root,
+ion-app {
+  display: block;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  min-height: 100%;
+  background: #0f0f10;
+  overflow: hidden;
+}
+
 ion-router-outlet {
   display: block;
   height: 100%;
