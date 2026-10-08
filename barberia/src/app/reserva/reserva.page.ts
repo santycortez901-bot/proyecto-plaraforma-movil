@@ -50,7 +50,7 @@ export class ReservaPage {
   selectedDay = 'LUN';
   selectedTime = '18:00';
   barberTitle = 'BARBERÍA';
-  private readonly bookedSlotsByDay: Record<string, string[]> = {
+  private bookedSlotsByDay: Record<string, string[]> = {
     LUN: ['18:00'],
   };
 
@@ -106,9 +106,13 @@ export class ReservaPage {
   }
 
   getAvailableTimeSlotsForDay(day: string): string[] {
+    const bookedTimes = this.bookedSlotsByDay[day] ?? [];
+
     return this.timeSlots.filter((time) => {
-      const bookedTimes = this.bookedSlotsByDay[day] ?? [];
-      return !bookedTimes.includes(time) || (this.selectedDay === day && this.selectedTime === time);
+      const isBooked = bookedTimes.includes(time);
+      const isCurrentlySelected = this.selectedDay === day && this.selectedTime === time;
+
+      return !isBooked || isCurrentlySelected;
     });
   }
 
@@ -129,11 +133,6 @@ export class ReservaPage {
       return;
     }
 
-    if (!this.bookedSlotsByDay[this.selectedDay]) {
-      this.bookedSlotsByDay[this.selectedDay] = [];
-    }
-
-    this.bookedSlotsByDay[this.selectedDay] = [...new Set([...this.bookedSlotsByDay[this.selectedDay], time])];
     this.selectedTime = time;
   }
 
@@ -146,6 +145,12 @@ export class ReservaPage {
   }
 
   confirmReservation(): void {
+    const bookedTimes = this.bookedSlotsByDay[this.selectedDay] ?? [];
+
+    if (!bookedTimes.includes(this.selectedTime)) {
+      this.bookedSlotsByDay[this.selectedDay] = [...new Set([...bookedTimes, this.selectedTime])];
+    }
+
     this.router.navigate(['/confirmacion'], {
       queryParams: {
         barber: this.barberTitle,

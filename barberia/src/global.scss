@@ -37,6 +37,43 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+:root {
+  --ion-safe-area-top: env(safe-area-inset-top, 0px);
+  --ion-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --ion-safe-area-left: env(safe-area-inset-left, 0px);
+  --ion-safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+html,
+body,
+app-root,
+ion-app {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: #0f0f10;
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: var(--ion-safe-area-top);
+  padding-bottom: var(--ion-safe-area-bottom);
+}
+
+ion-app,
+ion-router-outlet {
+  display: block;
+  height: 100%;
+  min-height: 100%;
+}
+
 .barber-marker-shell {
   background: transparent;
   border: 0;
