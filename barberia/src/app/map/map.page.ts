@@ -6,6 +6,7 @@ import {
   ViewChild,
   signal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { closeOutline, personOutline, searchOutline } from 'ionicons/icons';
@@ -31,7 +32,7 @@ interface BarberMarker {
 export class MapPage implements AfterViewInit, OnDestroy {
   @ViewChild('mapElement', { static: true }) private mapElement!: ElementRef<HTMLDivElement>;
 
-  readonly filters = ['Cipolletti', 'Comprimido', '5 estrellas'];
+  readonly filters: string[] = [];
   readonly barbers: BarberMarker[] = [
     {
       id: 'zona',
@@ -114,12 +115,14 @@ export class MapPage implements AfterViewInit, OnDestroy {
     },
   ];
 
-  readonly selectedBarber = signal<BarberMarker | null>(this.barbers[0]);
+  readonly selectedBarber = signal<BarberMarker | null>(null);
   readonly cardMessage = signal('');
   readonly showDetails = signal(false);
+  readonly searchTerm = signal('');
   private map?: L.Map;
+  private markers: L.Marker[] = [];
 
-  constructor() {
+  constructor(private readonly router: Router) {
     addIcons({ closeOutline, personOutline, searchOutline });
   }
 
@@ -133,10 +136,11 @@ export class MapPage implements AfterViewInit, OnDestroy {
     requestAnimationFrame(() => map.invalidateSize({ pan: false }));
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '',
       maxZoom: 19,
     }).addTo(map);
+
+    map.attributionControl.setPrefix(false);
 
     this.barbers.forEach((barber) => {
       const icon = L.divIcon({
@@ -146,18 +150,55 @@ export class MapPage implements AfterViewInit, OnDestroy {
         iconAnchor: [19, 19],
       });
 
-      L.marker([barber.latitude, barber.longitude], { icon, title: barber.name })
+      const marker = L.marker([barber.latitude, barber.longitude], { icon, title: barber.name })
         .addTo(map)
         .on('click', () => {
           this.selectedBarber.set(barber);
           this.cardMessage.set('');
           this.showDetails.set(false);
         });
+
+      this.markers.push(marker);
     });
   }
 
   ngOnDestroy(): void {
     this.map?.remove();
+  }
+
+  updateSearch(term: string): void {
+    this.searchTerm.set(term.trim().toLowerCase());
+
+    if (!this.map) {
+      return;
+    }
+
+    const normalized = this.searchTerm();
+
+    if (!normalized) {
+      this.markers.forEach((marker) => marker.addTo(this.map!));
+      this.map.setView([-38.9339, -67.9901], 15);
+      this.selectedBarber.set(null);
+      return;
+    }
+
+    const match = this.barbers.find((barber) =>
+      barber.name.toLowerCase().includes(normalized),
+    );
+
+    if (!match) {
+      return;
+    }
+
+    this.markers.forEach((marker) => marker.remove());
+    const marker = this.markers[this.barbers.findIndex((barber) => barber.id === match.id)];
+    if (marker) {
+      marker.addTo(this.map);
+      this.map.setView([match.latitude, match.longitude], 17);
+      this.selectedBarber.set(match);
+      this.cardMessage.set('');
+      this.showDetails.set(false);
+    }
   }
 
   dismissFilter(filter: string): void {
@@ -190,6 +231,11 @@ export class MapPage implements AfterViewInit, OnDestroy {
   }
 
   reserveAppointment(): void {
-    this.cardMessage.set('Pronto vas a poder reservar tu turno desde la app.');
+    const barber = this.selectedBarber();
+    this.router.navigate(['/reserva'], {
+      queryParams: {
+        barber: barber?.id ?? 'luis-pulguani',
+      },
+    });
   }
 }

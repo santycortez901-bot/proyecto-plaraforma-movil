@@ -5,7 +5,12 @@
     <div class="map-controls">
       <label class="search-box">
         <span class="visually-hidden">Buscar en el mapa</span>
-        <input type="search" placeholder="Value" />
+        <input
+          type="search"
+          placeholder="Buscar barbería"
+          [value]="searchTerm()"
+          (input)="updateSearch($any($event.target).value)"
+        />
         <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
       </label>
       <button class="profile-button" type="button" aria-label="Perfil">

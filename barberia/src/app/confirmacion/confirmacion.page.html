@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true" [scrollY]="false">
+  <main class="confirmation-page">
+    <section class="confirmation-card" aria-label="Confirmación de reserva">
+      <header class="brand-header">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <h1>{{ barber }}</h1>
+        <p>BARBERÍA</p>
+      </header>
+
+      <div class="status-badge">✓ RESERVA CONFIRMADA</div>
+
+      <div class="info-list">
+        <div class="info-row">
+          <span>Servicio</span>
+          <strong>{{ service }}</strong>
+        </div>
+        <div class="info-row">
+          <span>Fecha</span>
+          <strong>{{ day }}</strong>
+        </div>
+        <div class="info-row">
+          <span>Hora</span>
+          <strong>{{ time }}</strong>
+        </div>
+      </div>
+
+      <button class="primary-button" type="button" (click)="goBack()">VOLVER</button>
+    </section>
+  </main>
+</ion-content>

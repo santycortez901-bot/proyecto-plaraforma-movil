@@ -1,0 +1,123 @@
+<ion-content [fullscreen]="true" [scrollY]="true">
+  <main class="reservation-page">
+    <section class="reservation-card" aria-label="Reservar turno">
+      <header class="brand-header">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <h1>{{ barberTitle }}</h1>
+        <p>BARBERÍA</p>
+      </header>
+
+      <section class="section-panel">
+        <div class="section-heading">
+          <h2>RESERVÁ TU TURNO</h2>
+          <p>Elegí día y horario para tu corte.</p>
+        </div>
+
+        <div class="services-grid" aria-label="Servicios">
+          @for (service of services; track service) {
+            <button
+              type="button"
+              class="service-option"
+              [class.active]="selectedServices.includes(service)"
+              (click)="toggleService(service)"
+            >
+              <span class="icon" aria-hidden="true">{{ service === 'Corte' ? '✂' : service === 'Barba' ? '🪒' : service === 'Cejas' ? '✏' : service === 'Global' ? '◎' : '✦' }}</span>
+              <span>{{ service }}</span>
+            </button>
+          }
+        </div>
+      </section>
+
+      <section class="section-panel">
+        <div class="field-title">
+          <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+          <span>Elegí tu día</span>
+        </div>
+
+        <div class="date-grid" aria-label="Días disponibles">
+          @for (day of days; track day.label) {
+            <button
+              type="button"
+              class="day-option"
+              [class.active]="selectedDay === day.label"
+              [class.disabled]="isDayUnavailable(day.label)"
+              [disabled]="isDayUnavailable(day.label)"
+              (click)="selectDay(day.label)"
+            >
+              <span class="day-label">{{ day.label }}</span>
+              <span class="day-value">{{ day.value }}</span>
+            </button>
+          }
+        </div>
+      </section>
+
+      <section class="section-panel">
+        <div class="field-title">
+          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+          <span>Elegí tu horario</span>
+        </div>
+
+        <div class="time-grid" aria-label="Horarios disponibles">
+          @for (time of timeSlots; track time) {
+            <button
+              type="button"
+              class="time-option"
+              [class.active]="selectedTime === time"
+              [class.disabled]="isTimeUnavailable(time)"
+              [disabled]="isTimeUnavailable(time)"
+              (click)="selectTime(time)"
+            >
+              {{ time }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <section class="section-panel form-panel">
+        <div class="field-title">
+          <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          <span>Tus datos</span>
+        </div>
+
+        <label class="input-field">
+          <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          <input type="text" value="Nombre y apellido" aria-label="Nombre y apellido" />
+        </label>
+
+        <label class="input-field">
+          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+          <input type="tel" value="Teléfono" aria-label="Teléfono" />
+        </label>
+
+        <label class="input-field">
+          <ion-icon name="create-outline" aria-hidden="true"></ion-icon>
+          <input type="text" value="Observaciones (opcional)" aria-label="Observaciones" />
+        </label>
+      </section>
+
+      <div class="summary-box" aria-live="polite">
+        <div class="summary-row">
+          <span>Servicio</span>
+          <strong>{{ summaryServices }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Día</span>
+          <strong>{{ selectedDay }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Horario</span>
+          <strong>{{ selectedTime }}</strong>
+        </div>
+      </div>
+
+      <button type="button" class="confirm-button" (click)="confirmReservation()">
+        CONFIRMAR RESERVA
+      </button>
+
+      <button type="button" class="back-button" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" aria-hidden="true"></ion-icon>
+        <span>VOLVER</span>
+      </button>
+    </section>
+  </main>
+</ion-content>
