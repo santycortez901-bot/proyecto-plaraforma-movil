@@ -204,7 +204,14 @@ ion-content {
 }
 
 .reserve-button {
-  margin-top: 14px;
+  background: linear-gradient(135deg,#f5d38a,#e3b96b 36%,#c88c30);
+  border: 1px solid rgba(255,223,164,.8);
+  box-shadow: 0 8px 20px rgb(227 185 107 / 25%);
+  color: #1b120d;
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 18px;
+  min-height: 52px;
   width: 100%;
 }
 
@@ -250,10 +257,11 @@ ion-content {
 }
 
 .view-button {
-  background: #e3b96b;
-  border: 1px solid #e3b96b;
+  background: linear-gradient(135deg, #f1d08b 0%, #d9a85e 100%);
+  border: 1px solid rgba(255, 219, 141, 0.7);
+  box-shadow: 0 8px 20px rgb(227 185 107 / 22%);
   color: #1d140f;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .card-message {
