@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+  signal,
+} from '@angular/core';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { closeOutline, personOutline, searchOutline } from 'ionicons/icons';
@@ -107,9 +114,9 @@ export class MapPage implements AfterViewInit, OnDestroy {
     },
   ];
 
-  selectedBarber: BarberMarker | null = this.barbers[0];
-  cardMessage = '';
-  showDetails = false;
+  readonly selectedBarber = signal<BarberMarker | null>(this.barbers[0]);
+  readonly cardMessage = signal('');
+  readonly showDetails = signal(false);
   private map?: L.Map;
 
   constructor() {
@@ -142,9 +149,9 @@ export class MapPage implements AfterViewInit, OnDestroy {
       L.marker([barber.latitude, barber.longitude], { icon, title: barber.name })
         .addTo(map)
         .on('click', () => {
-          this.selectedBarber = barber;
-          this.cardMessage = '';
-          this.showDetails = false;
+          this.selectedBarber.set(barber);
+          this.cardMessage.set('');
+          this.showDetails.set(false);
         });
     });
   }
@@ -161,27 +168,28 @@ export class MapPage implements AfterViewInit, OnDestroy {
   }
 
   closeCard(): void {
-    this.selectedBarber = null;
-    this.cardMessage = '';
-    this.showDetails = false;
+    this.selectedBarber.set(null);
+    this.cardMessage.set('');
+    this.showDetails.set(false);
   }
 
   showDescription(): void {
-    if (this.selectedBarber) {
-      this.cardMessage = this.selectedBarber.specialties.join(' · ');
+    const barber = this.selectedBarber();
+    if (barber) {
+      this.cardMessage.set(barber.specialties.join(' · '));
     }
   }
 
   viewBarber(): void {
-    this.showDetails = true;
-    this.cardMessage = '';
+    this.showDetails.set(true);
+    this.cardMessage.set('');
   }
 
   closeDetails(): void {
-    this.showDetails = false;
+    this.showDetails.set(false);
   }
 
   reserveAppointment(): void {
-    this.cardMessage = 'Pronto vas a poder reservar tu turno desde la app.';
+    this.cardMessage.set('Pronto vas a poder reservar tu turno desde la app.');
   }
 }

@@ -13,7 +13,7 @@
       </button>
     </div>
 
-    @if (filters.length && !showDetails && !cardMessage) {
+    @if (filters.length && !showDetails() && !cardMessage()) {
       <div class="filter-list" aria-label="Filtros seleccionados">
         @for (filter of filters; track filter) {
           <button class="filter-chip" type="button" (click)="dismissFilter(filter)">
@@ -24,8 +24,8 @@
       </div>
     }
 
-    @if (selectedBarber; as barber) {
-      @if (showDetails) {
+    @if (selectedBarber(); as barber) {
+      @if (showDetails()) {
         <section class="selection-card details-card" aria-label="Detalles de la barbería">
           <button
             class="close-card"
@@ -49,8 +49,8 @@
               <li><span>{{ item.service }}</span><strong>{{ item.price }}</strong></li>
             }
           </ul>
-          @if (cardMessage) {
-            <p class="card-message" role="status">{{ cardMessage }}</p>
+          @if (cardMessage()) {
+            <p class="card-message" role="status">{{ cardMessage() }}</p>
           }
           <button class="view-button reserve-button" type="button" (click)="reserveAppointment()">
             Reservá tu turno
@@ -68,8 +68,8 @@
           </button>
           <h1>{{ barber.name }}</h1>
           <p>Encargado: {{ barber.owner }}</p>
-          @if (cardMessage) {
-            <p class="card-message" role="status">{{ cardMessage }}</p>
+          @if (cardMessage()) {
+            <p class="card-message" role="status">{{ cardMessage() }}</p>
           }
           <div class="card-actions">
             <button class="description-button" type="button" (click)="showDescription()">
