@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true" [scrollY]="false">
+  <main class="login-page">
+    <button class="profile-button" type="button" aria-label="Perfil">
+      <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+    </button>
+
+    <div class="brand" aria-label="Barbershop Location Map">
+      <img src="assets/barbershop-mark.svg" alt="" />
+      <div class="brand-name">BARBERSHOP</div>
+      <div class="brand-caption">LOCATION MAP</div>
+    </div>
+
+    <form class="login-card" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="tu email"
+        autocomplete="email"
+        required
+        ngModel
+      />
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Acá va la contra perro"
+        autocomplete="current-password"
+        required
+        ngModel
+      />
+
+      <button class="submit-button" type="submit">iniciar sesion</button>
+
+      <button class="forgot-button" type="button" (click)="onForgotPassword()">
+        tamos grande para olvidar la contra
+      </button>
+
+      <p class="feedback" role="status" aria-live="polite" [hidden]="!feedbackMessage">
+        {{ feedbackMessage }}
+      </p>
+    </form>
+  </main>
+</ion-content>

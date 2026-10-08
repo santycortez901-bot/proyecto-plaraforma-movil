@@ -1,0 +1,268 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-content {
+  --background: #f2f1eb;
+}
+
+.map-page {
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.map-canvas {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.map-controls {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  left: 0;
+  padding: max(30px, env(safe-area-inset-top)) 26px 0 21%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 500;
+}
+
+.search-box {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
+  display: flex;
+  height: 34px;
+  min-width: 0;
+  padding: 0 10px 0 13px;
+  flex: 1;
+
+  input {
+    background: transparent;
+    border: 0;
+    color: #292929;
+    font: inherit;
+    font-size: 13px;
+    min-width: 0;
+    outline: none;
+    width: 100%;
+
+    &::placeholder {
+      color: #aaa;
+      opacity: 1;
+    }
+  }
+
+  ion-icon {
+    color: #111;
+    flex: 0 0 auto;
+    font-size: 17px;
+  }
+}
+
+.profile-button {
+  align-items: center;
+  background: #eee2ff;
+  border: 0;
+  border-radius: 50%;
+  color: #4b347b;
+  display: flex;
+  flex: 0 0 32px;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  width: 32px;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.filter-list {
+  bottom: calc(121px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 14px;
+  left: 0;
+  overflow-x: auto;
+  padding: 0 3px;
+  position: absolute;
+  right: 0;
+  scrollbar-width: none;
+  white-space: nowrap;
+  z-index: 500;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.filter-chip {
+  align-items: center;
+  background: #2d2d2d;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: 13px;
+  gap: 6px;
+  height: 26px;
+  padding: 0 7px;
+
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+.selection-card {
+  background: #fff;
+  border-radius: 8px 8px 0 0;
+  bottom: 0;
+  box-shadow: 0 -2px 8px rgb(0 0 0 / 12%);
+  box-sizing: border-box;
+  left: 0;
+  min-height: 121px;
+  padding: 24px 28px max(8px, env(safe-area-inset-bottom));
+  position: absolute;
+  right: 0;
+  z-index: 600;
+
+  h1 {
+    color: #292929;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 0 28px 8px 0;
+  }
+
+  p {
+    color: #292929;
+    font-size: 13px;
+    line-height: 18px;
+    margin: 0;
+  }
+}
+
+.details-card {
+  max-height: 70dvh;
+  overflow-y: auto;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+
+  h2 {
+    color: #292929;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    margin: 14px 0 5px;
+  }
+
+  ul {
+    color: #292929;
+    font-size: 13px;
+    line-height: 19px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.specialties li {
+  padding-left: 12px;
+  position: relative;
+
+  &::before {
+    content: '•';
+    left: 0;
+    position: absolute;
+  }
+}
+
+.price-list li {
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+
+  strong {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+.reserve-button {
+  margin-top: 14px;
+  width: 100%;
+}
+
+.close-card {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #222;
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 12px;
+  top: 6px;
+  width: 28px;
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.card-actions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+
+  button {
+    border-radius: 7px;
+    font: inherit;
+    font-size: 13px;
+    height: 33px;
+    padding: 0 10px;
+  }
+}
+
+.description-button {
+  background: #e4e4e4;
+  border: 1px solid #aaa;
+  color: #292929;
+}
+
+.view-button {
+  background: #2d2d2d;
+  border: 1px solid #2d2d2d;
+  color: #fff;
+}
+
+.card-message {
+  color: #666 !important;
+  font-size: 11px !important;
+  line-height: 14px !important;
+  margin-top: 5px !important;
+}
+
+.visually-hidden {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

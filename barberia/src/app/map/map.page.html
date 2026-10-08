@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true" [scrollY]="false">
+  <main class="map-page">
+    <div #mapElement class="map-canvas" aria-label="Mapa de Cipolletti"></div>
+
+    <div class="map-controls">
+      <label class="search-box">
+        <span class="visually-hidden">Buscar en el mapa</span>
+        <input type="search" placeholder="Value" />
+        <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+      </label>
+      <button class="profile-button" type="button" aria-label="Perfil">
+        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+      </button>
+    </div>
+
+    @if (filters.length && !showDetails && !cardMessage) {
+      <div class="filter-list" aria-label="Filtros seleccionados">
+        @for (filter of filters; track filter) {
+          <button class="filter-chip" type="button" (click)="dismissFilter(filter)">
+            {{ filter }}
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        }
+      </div>
+    }
+
+    @if (selectedBarber; as barber) {
+      @if (showDetails) {
+        <section class="selection-card details-card" aria-label="Detalles de la barbería">
+          <button
+            class="close-card"
+            type="button"
+            aria-label="Volver al mapa"
+            (click)="closeDetails()"
+          >
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+          <h1>{{ barber.name }}</h1>
+          <p>Encargado y barbero: {{ barber.owner }}</p>
+          <h2>Especialización</h2>
+          <ul class="specialties">
+            @for (specialty of barber.specialties; track specialty) {
+              <li>{{ specialty }}</li>
+            }
+          </ul>
+          <h2>Precios</h2>
+          <ul class="price-list">
+            @for (item of barber.prices; track item.service) {
+              <li><span>{{ item.service }}</span><strong>{{ item.price }}</strong></li>
+            }
+          </ul>
+          @if (cardMessage) {
+            <p class="card-message" role="status">{{ cardMessage }}</p>
+          }
+          <button class="view-button reserve-button" type="button" (click)="reserveAppointment()">
+            Reservá tu turno
+          </button>
+        </section>
+      } @else {
+        <section class="selection-card" aria-label="Barbería seleccionada">
+          <button
+            class="close-card"
+            type="button"
+            aria-label="Cerrar ficha"
+            (click)="closeCard()"
+          >
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+          <h1>{{ barber.name }}</h1>
+          <p>Encargado: {{ barber.owner }}</p>
+          @if (cardMessage) {
+            <p class="card-message" role="status">{{ cardMessage }}</p>
+          }
+          <div class="card-actions">
+            <button class="description-button" type="button" (click)="showDescription()">
+              descripción
+            </button>
+            <button class="view-button" type="button" (click)="viewBarber()">ver</button>
+          </div>
+        </section>
+      }
+    }
+  </main>
+</ion-content>
